@@ -62,7 +62,7 @@
             margin: 3rem auto;
             width: 50%;
             height: 400px; /* Height for the chart */
-            display: none; /* Hide the chart by default */
+
         }
         .clear{
             margin-top: 3rem;
@@ -102,27 +102,27 @@
                 Budget App
             </a>
             <button class='dark' onclick="toggleDarkMode()">Dark/Light</button>
-            <button class="logout">Logout</button>
+            <button class="logout" onclick="logout()">Logout</button>
         </div>
     </nav>
     <center>
-        <div id="welcome" style="margin-top: 2.5rem;">
-            <h1 style="font-family:monospace;">WELCOME USER</h1>
+        <div  style="margin-top: 2.5rem;">
+            <h1 id="welcome" style="font-family:monospace;">WELCOME USER</h1>
         </div>
     </center>
-    <div class="input-1 d-flex gap-5 justify-content-center mt-5" style="background-color: rgba(220, 220, 220, 0.477); padding-top: 15px;">
+    <div class="input-1 d-flex text-center mt-5" style="background-color: rgba(220, 220, 220, 0.477); padding-top: 15px;">
         <p>Your Budget: 
-            <input type="number" id="budgetAmount" placeholder="Current Budget Amount">
-            <button onclick="calculateBudget()">Set Budget</button> <!-- Set Budget button -->
+            <input type="number" id="budgetAmount" placeholder="Current Budget ">
+            <button class="mt-4" onclick="calculateBudget()">Set Budget</button> <!-- Set Budget button -->
         </p>
         <p>New Budget Amount: 
             <input type="number" id="newBudgetAmount" placeholder="New Budget Amount">
-            <button onclick="addNewBudget()">Add New Budget</button> <!-- Add New Budget button -->
+            <button class="mt-4" onclick="addNewBudget()">Add New Budget</button> <!-- Add New Budget button -->
         </p>
         <p>Expense Details: 
             <input type="text" id="expenseDetails" placeholder="Expense Details">
             <input type="number" id="expenseAmount" placeholder="Expense Amount">
-            <button onclick="addExpense()">Add Expense</button>
+            <button class="mt-4" onclick="addExpense()">Add Expense</button>
         </p>
         <!-- Button to show/hide the chart -->
     </div>
@@ -164,159 +164,11 @@
 
     <!-- Chart Container --> 
      <div class="chart">
-        <button onclick="toggleChart()">Toggle Chart</button>
+        <button onclick="toggleChart()">Show pie Chart</button>
      </div>
     <div class="chart-container">
-        <canvas id="budgetChart"></canvas>
+        <canvas  id="budgetChart"></canvas>
     </div>
-
-    <script>
-        let totalBudget = 0;
-        let totalExpense = 0;
-        let expenseCount = 0; // Initialize a counter for expenses
-        let currentExpenseIndex = -1; // To keep track of the currently edited expense
-
-        const ctx = document.getElementById('budgetChart').getContext('2d');
-        let budgetChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Budget', 'Expenses'],
-                datasets: [{
-                    label: 'Budget vs Expenses',
-                    data: [totalBudget, totalExpense],
-                    backgroundColor: [
-                        'rgba(75, 192, 192, 0.2)', // Budget color
-                        'rgba(255, 99, 132, 0.2)'  // Expenses color
-                    ],
-                    borderColor: [
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(255, 99, 132, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Budget vs Expenses'
-                    }
-                }
-            }
-        });
-
-        function calculateBudget() {
-            const budgetInput = document.getElementById('budgetAmount').value;
-            totalBudget = parseFloat(budgetInput);
-            document.getElementById('budgetDisplay').innerText = `$${totalBudget}`;
-            updateChart();
-        }
-
-        function addNewBudget() {
-            const newBudgetInput = document.getElementById('newBudgetAmount').value;
-            const newBudget = parseFloat(newBudgetInput);
-            totalBudget += newBudget;
-            document.getElementById('budgetDisplay').innerText = `$${totalBudget}`;
-            document.getElementById('newBudgetAmount').value = ''; // Clear the input field
-            updateChart();
-        }
-
-        function addExpense() {
-            const details = document.getElementById('expenseDetails').value;
-            const amount = document.getElementById('expenseAmount').value;
-
-            if (details === '' || amount === '') {
-                alert('Please enter both expense details and amount.');
-                return;
-            }
-
-            const expense = {
-                id: expenseCount++,
-                details: details,
-                amount: parseFloat(amount)
-            };
-
-            totalExpense += expense.amount;
-            document.getElementById('expenseDisplay').innerText = `$${totalExpense}`;
-            document.getElementById('balanceDisplay').innerText = `$${totalBudget - totalExpense}`;
-            document.getElementById('expenseDetails').value = '';
-            document.getElementById('expenseAmount').value = '';
-
-            displayExpense(expense);
-            updateChart();
-        }
-
-        function displayExpense(expense) {
-            const expenseList = document.getElementById('expenseList');
-            const expenseItem = document.createElement('div');
-            expenseItem.classList.add('expense-item');
-            expenseItem.innerHTML = `
-                <span>${expense.details}: $${expense.amount}</span>
-                <button onclick="editExpense(${expense.id})">Edit</button>
-                <button onclick="deleteExpense(${expense.id})">Delete</button>
-            `;
-            expenseList.appendChild(expenseItem);
-        }
-
-        function editExpense(id) {
-            const expenseList = document.getElementById('expenseList').children;
-            for (let i = 0; i < expenseList.length; i++) {
-                if (expenseList[i].children[0].innerText.includes(id)) {
-                    const expense = expenseList[i];
-                    document.getElementById('expenseDetails').value = expense.children[0].innerText.split(':')[0];
-                    document.getElementById('expenseAmount').value = expense.children[0].innerText.split('$')[1];
-                    currentExpenseIndex = id;
-                    break;
-                }
-            }
-        }
-
-        function deleteExpense(id) {
-            const expenseList = document.getElementById('expenseList').children;
-            for (let i = 0; i < expenseList.length; i++) {
-                if (expenseList[i].children[0].innerText.includes(id)) {
-                    const amount = parseFloat(expenseList[i].children[0].innerText.split('$')[1]);
-                    totalExpense -= amount;
-                    document.getElementById('expenseDisplay').innerText = `$${totalExpense}`;
-                    document.getElementById('balanceDisplay').innerText = `$${totalBudget - totalExpense}`;
-                    expenseList[i].remove();
-                    updateChart();
-                    break;
-                }
-            }
-        }
-
-        function clearAll() {
-            totalBudget = 0;
-            totalExpense = 0;
-            document.getElementById('budgetDisplay').innerText = `$${totalBudget}`;
-            document.getElementById('expenseDisplay').innerText = `$${totalExpense}`;
-            document.getElementById('balanceDisplay').innerText = `$${totalBudget - totalExpense}`;
-            document.getElementById('expenseList').innerHTML = ''; // Clear expense list
-            document.getElementById('budgetAmount').value = '';
-            document.getElementById('newBudgetAmount').value = '';
-            document.getElementById('expenseDetails').value = '';
-            document.getElementById('expenseAmount').value = '';
-            updateChart();
-        }
-
-        function toggleChart() {
-            const chartContainer = document.querySelector('.chart-container');
-            chartContainer.style.display = chartContainer.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function updateChart() {
-            budgetChart.data.datasets[0].data = [totalBudget, totalExpense];
-            budgetChart.update();
-        }
-
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-        }
-    </script>
 </body>
+<script src="./script.js"></script>
 </html>

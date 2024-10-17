@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login page</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
@@ -27,7 +27,6 @@
         padding:3rem ;
         border: 0;
         border-radius: 10px;
-        
     }
     .login input{
         border: 0;
@@ -48,40 +47,48 @@
         font-weight: bolder;
         padding-bottom: 2rem;
     }
-   button{
-    
-    width:14rem;
-    height: 2rem;
-    background-color: grey;
-    
-    font-weight: bolder;
-    border: 0;
+   .log{
+        width:14rem;
+        height: 2rem;
+        background-color: grey;
+        font-weight: bolder;
+        border: 0;
         border-radius: 5px;
    }
-   button:hover{
-    color: white;
-    background-color: rgba(0, 0, 0, 0.534);
+   .log:hover{
+        color: white;
+        background-color: rgba(0, 0, 0, 0.534);
    }
-
+   .reg{
+        border: 0;
+        background-color:rgba(121, 121, 121, 0) ;
+        font-weight: bolder;
+   }
+   .reg:hover{
+        color: white;
+        text-decoration: underline;
+   }
 </style>
 <body>
-        <div class="bugdet">
+        <div class="budget">
             <center>
                 <div class="login">
                     <div class="login-details">
                         <h3>BUDGET APP</h3>
-                        <p>User Name : <input type="text" name="" id="" placeholder=" Username"></p>
-                    <p>Password : &nbsp;&nbsp;<input type="password" name="" id="" placeholder=" Password"></p>
-                    <button>login</button>
-                    <p>Don't have an account? <span><a href="">Register</a></span></p>
+                        <p>User Name: <input type="text" id="username" placeholder="Username"></p>
+                        <p>Password: &nbsp;&nbsp;<input type="password" id="password" placeholder="Password"></p>
+                        <button class="log" id="loginBtn">Login</button>
+                        <p>Don't have an account? <button class="reg" onclick="window.location='./register.html'">Register</button></p>
                     </div>
-    
                 </div>
             </center>
-         
-           
         </div>
 
-    
+<script src="./script1.js">
+
+
+</script>
+
 </body>
+
 </html>
