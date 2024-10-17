@@ -39,14 +39,14 @@ function login() {
 //     }
 // }
 
-function validateEmail(email) {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(email);
-}
+// function validateEmail(email) {
+//     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//     return emailPattern.test(email);
+// }
 
 
 // Attach event listener to the login button
-document.getElementById("loginBtn").addEventListener("click", login);
+// document.getElementById("loginBtn").addEventListener("click", login);
 
 function register() {
     // Get the values of username, password, and email
@@ -61,7 +61,7 @@ function register() {
         alert("Please enter a valid email address.");
     } else {
         // Check if username already exists in localStorage
-        if (localStorage.getItem(username)) {
+        if (localStorage.getItem('username')) {
             alert("Username already exists. Please choose a different one.");
         } else {
             // Store the user data in localStorage

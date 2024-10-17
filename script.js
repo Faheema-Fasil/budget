@@ -1,17 +1,10 @@
 
 
+let st={};
+st=localStorage.getItem('username')
+console.log(st);
 
 
-let uname = localStorage.getItem('username'); // Correct key retrieval
-const welcome1 = document.getElementById('welcome'); // Ensure this element exists in your HTML
-console.log(uname);
-
-// Display welcome message only if uname is available
-if (uname) {
-    welcome1.innerHTML = `WELCOME ${uname}`;
-} else {
-    welcome1.innerHTML = 'WELCOME USER'; // Default message if no username is found
-}
 let totalBudget = 0;
 let totalExpense = 0;
 let expenseCount = 0; // Initialize a counter for expenses
